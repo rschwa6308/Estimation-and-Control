@@ -155,3 +155,6 @@ Install `estimation-and-control`
 ```bash
 pip install -e .
 ```
+
+## License
+This project is licensed under the [MIT License](LICENSE) © 2025 [Russell Schwartz].
