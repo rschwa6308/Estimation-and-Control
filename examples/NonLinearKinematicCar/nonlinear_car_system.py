@@ -21,6 +21,7 @@ dt = 0.1
 drag_coeff1 = 0.0
 drag_coeff2 = 0.4
 
+# defined using jax.numpy for all numerical operations to ensure function can be auto-differentiated
 def dynamics_func(x, u, w):
     pos, vel = x.flatten()
     acc = u.flatten()[0]
@@ -31,6 +32,7 @@ def dynamics_func(x, u, w):
         [vel + (acc - jnp.sign(vel)*drag)*dt]
     ])
 
+# defined using jax.numpy for all numerical operations to ensure function can be auto-differentiated
 def measurement_func(x, v):
     pos, vel = x.flatten()
     noise = v.flatten()[0]

@@ -2,7 +2,7 @@ import numpy as np
 import scipy.linalg
 
 
-def mat_sqrt_cholesky(M: np.array):
+def mat_sqrt_cholesky(M: np.ndarray):
     """
     Evaluate the matrix square root L via cholesky decomposition:
      - M = L L^T
@@ -21,7 +21,7 @@ def mat_sqrt_cholesky(M: np.array):
 
 
 
-def mat_sqrt_eigen(M: np.array):
+def mat_sqrt_eigen(M: np.ndarray):
     """
     Evaluate the matrix square root A via eigen-decomposition:
      - M = V D V^T
@@ -41,7 +41,7 @@ def mat_sqrt_eigen(M: np.array):
     return A
 
 
-def mat_sqrt_eigen_preserve_vectors(M: np.array):
+def mat_sqrt_eigen_preserve_vectors(M: np.ndarray):
     """
     Evaluate the matrix square root S via eigen-decomposition s.t. eigenvectors are preserved:
      - M = V D V^T

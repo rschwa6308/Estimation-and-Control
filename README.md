@@ -1,13 +1,101 @@
 # Estimation-and-Control
-Python reference implementations of common state estimation and control algorithms. See `Examples/` for full example usage. 
 
- - Filters
+📌 *Python reference implementations of state estimation and control algorithms with JAX-powered auto-differentiation support for high-performance optimization and learning.*
+
+<p align="center">
+  <img src="docs/media/Robot_Hallway_Localization.png" width="800" alt="Filters Illustration"/>
+  <br/>  
+  <sub><i>Illustration of Bayesian state-estimation in a simple simulated environment. Learn more at 
+  <a href="https://russ-stuff.com/robotics/the-bayes-filter-for-robotic-state-estimation/">russ-stuff.com/robotics</a>.</i></sub>  
+
+</p>
+
+## Overview
+
+This repository provides clean, well-documented Python implementations of commonly used **state estimation** and **control algorithms**. It is designed for researchers, engineers, and students who want reliable reference implementations that are:
+
+ - Readable: Clear and modular code structure
+ - Extendable: Easy to adapt for custom systems
+ - Accelerated: Seamless support for **JAX**
+
+> ⚡ JAX support enables auto-differentiation, allowing for the user to model nonlinear systems without manually deriving symbolic Jacobians.
+
+
+## Table of Contents
+
+ - [System Modeling](#system-modeling)
+ - [Filters](#filters)
    - Kalman Filter
    - Extended Kalman Filter
    - Unscented Kalman Filter
- - Controllers
-   - coming soon
+   - Histogram Filter
+   - Particle Filter
+ - [Controllers](#controllers)
+   - (coming soon 🚧)
+ - [Quickstart](#🚀-quickstart)
+ - [Installation](#installation)
+ - [License](#license)
 
+
+## System Modeling
+A general framework is provided for modeling dynamical systems, including measurement models and non-determinism. Certain filters/controllers are only compatible with certain types of system models.
+```
+                   +------------------+
+                   |   SystemModel    |
+                   |------------------|
+                   | * f(x,u)         |  <-- dynamics
+                   | * h(x)           |  <-- measurement
+                   +------------------+
+                             |
+         +-------------------+-------------------+
+         |                                       |
+         v                                       v
++-----------------------+          +---------------------------+
+|  GaussianSystemModel  |          | DifferentiableSystemModel |
+|  (adds noise models)  |          |      (Jacobian API)       |
+|-----------------------|          |---------------------------|
+| * Q (process cov)     |          | * jacobian_f(x,u)         |
+| * R (measurement cov) |          | * jacobian_h(x)           |
++-----------------------+          +---------------------------+
+         |                                      |
+         |                                      |
+         |    +---------------------------------+---------------------------+
+         |    |                                 |                           |
+         v    v                                 v                           v
++----------------------+           +-------------------------+   +-----------------------+
+|  LinearSystemModel   |           |  AutoDiffSystemModel    |   |  SymbDiffSystemModel  |
+| (concrete, analytic) |           | (JAX / autograd)        |   | (user-provided jac)   |
+|----------------------|           |-------------------------|   |-----------------------|
+| A, B, C matrices,    |           | Wraps f,h but uses      |   | Wraps f,h but uses    |
+| implements jacobians |           | auto-diff for jacobians |   | symbolic jacobians    |
+| * f(x,u) = Ax + Bu   |           | * jax.np operations     |   | * explicit jacobian_f |
+| * h(x) = Cx          |           | * JIT compilation       |   | * explicit jacobian_h |
++----------------------+           +-------------------------+   +-----------------------+
+
+```
+
+## Filters
+
+The [Bayes Filter](https://russ-stuff.com/robotics/the-bayes-filter-for-robotic-state-estimation/) forms the basis of all online probabilistic state estimation, with a variety of implementations suitable for different types of systems. This repository includes implementations of:
+
+ - **Kalman Filter (KF)**: Optimal for linear Gaussian systems with Gaussian belief model
+ - **Extended Kalman Filter (EKF)**: Handles nonlinear dynamics via first-order approximation
+ - **Unscented Kalman Filter (UKF)**: Sigma-point approach for better nonlinear performance
+ - **Histogram Filter**: General filter that models belief explicitly as a dense histogram over the state space
+ - **Particle Filter**: General filter that models belief implicitly as a sparse cloud of points
+
+
+## Controllers
+
+Controllers are a work-in-progress 🚧. Support is planned for:
+
+ - Proportional-Integral-Derivative (PID)
+ - Linear Quadratic Regulator (LQR)
+ - Model Predictive Control (MPC)
+ - Nonlinear control methods
+
+
+## 🚀 Quickstart
 
 Example usage:
 ```python
@@ -49,4 +137,21 @@ car_KF.update_step(z)
 
 # to read off the state estimate...
 print(car_KF.mean, car_KF.covariance)
+```
+
+## Installation
+
+```bash
+git clone https://github.com/rschwa6308/Estimation-and-Control.git
+cd Estimation-and-Control
+```
+
+Install dependencies (including JAX)
+```bash
+pip install -r requirements.txt
+```
+
+Install `estimation-and-control`
+```bash
+pip install -e .
 ```

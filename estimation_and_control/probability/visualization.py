@@ -7,7 +7,7 @@ from probability.distributions import HistogramDistribution
 # from helpers import query_pdf
 
 
-def plot_pdf_values(ax: plt.Axes, sample_points: np.array, pdf_values: np.array, transpose_axis=False, edgecolor="black", **kwargs):
+def plot_pdf_values(ax: plt.Axes, sample_points: np.ndarray, pdf_values: np.ndarray, transpose_axis=False, edgecolor="black", **kwargs):
     "Plot a PDF evaluated at sample points"
     assert(sample_points.shape == pdf_values.shape)
 

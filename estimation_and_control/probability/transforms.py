@@ -5,15 +5,15 @@ from estimation_and_control.helpers import interval_overlap
 from .distributions import ProbabilityDistribution, GaussianDistribution, HistogramDistribution
 
 
-"""
-An 'uncertainty transform' models the affect of a function applied to a value that is
-known with some uncertainty. Such a transform generally takes as input
- - the function being applied to the domain $f(X): R^n -> R^m$
- - the probability distribution representing our prior on the value $P(X): R^n -> R$
-and returns
- - the approximate posterior belief on the value: $P(Y|X): R^n -> R$
- - potentially some additional information on the joint distribution $P(X,Y)$
-"""
+###########################################################################################
+# An 'uncertainty transform' models the affect of a function applied to a value that is
+# known only with some uncertainty. Such a transform generally takes as input
+#   - the function being applied to the domain $f(X): R^n -> R^m$
+#   - the probability distribution representing our prior on the value $P(X): R^n -> R$
+# and returns
+#   - the approximate posterior belief on the value: $P(Y|X): R^n -> R$
+#   - potentially some additional information on the joint distribution $P(X,Y)$
+###########################################################################################
 
 
 from .sigma_points import SigmaPointSelector
