@@ -139,6 +139,8 @@ car_KF.update_step(z)
 print(car_KF.mean, car_KF.covariance)
 ```
 
+For a more, see the [NonLinearKinematicCar](examples/NonLinearKinematicCar/nonlinear_car_estimation_EKF.ipynb) example.
+
 ## Installation
 
 ```bash
