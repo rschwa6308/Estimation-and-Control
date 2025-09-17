@@ -1,22 +1,24 @@
 # Estimation-and-Control
 
-📌 *Python reference implementations of state estimation and control algorithms with JAX-powered auto-differentiation support for high-performance optimization and learning.*
+📌 *Python reference implementations of standard estimation and control algorithms - built with JAX for performant vector processing and auto-differentiation.*
 
 <p align="center">
   <img src="docs/media/Robot_Hallway_Localization.png" width="800" alt="Filters Illustration"/>
   <br/>  
-  <sub><i>Illustration of Bayesian state-estimation in a simple simulated environment. Learn more at 
-  <a href="https://russ-stuff.com/robotics/the-bayes-filter-for-robotic-state-estimation/">russ-stuff.com/robotics</a>.</i></sub>  
+  <sub><i>Bayesian state-estimation in a simple simulated environment. 
+  [<a href="https://russ-stuff.com/robotics/the-bayes-filter-for-robotic-state-estimation/">link</a>]</i></sub>  
 
 </p>
 
 ## Overview
 
-This repository provides clean, well-documented Python implementations of commonly used **state estimation** and **control algorithms**. It is designed for researchers, engineers, and students who want reliable reference implementations that are:
+This repository provides clean, well-documented Python implementations of commonly used tate estimation and control algorithms. It is designed for students and engineers who want reliable reference implementations that are:
 
- - Readable: Clear and modular code structure
- - Extendable: Easy to adapt for custom systems
- - Accelerated: Seamless support for **JAX**
+ 1. Readable
+ 2. Generic
+ 3. Performant
+
+in roughly that order of importance.
 
 > ⚡ JAX support enables auto-differentiation, allowing for the user to model nonlinear systems without manually deriving symbolic Jacobians.
 
@@ -126,16 +128,14 @@ from estimation_and_control.filters.filters import KalmanFilter
 
 car_KF = KalmanFilter(double_integrator)
 
-# to initialize the filter belief...
+# initialize the filter belief
 car_KF.initialize(initial_mean, initial_covariance)
 
-# to filter a timestep...
+# filter a timestep, followed by a measurement
 car_KF.predict_step(x, u)
+car_KF.update_step(z)        # fully independent
 
-# to filter a measurement...
-car_KF.update_step(z)
-
-# to read off the state estimate...
+# read off the currnt state estimate
 print(car_KF.mean, car_KF.covariance)
 ```
 
